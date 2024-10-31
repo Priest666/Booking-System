@@ -6,8 +6,22 @@ using System.Threading.Tasks;
 
 namespace Booking_System
 {
-    internal class ClassRoom : Premises
+
+    
+     internal class ClassRoom : Premises
     {
+       public bool HasProjector {  get; set; } // Har denna för att avgöra om det är ett grupprum eller klassrum.
+
+        public ClassRoom(string name, int capacity, bool hasProjector) : base(name, capacity)
+        {
+            HasProjector = hasProjector;
+        }
+
+        public override void DisplayInfo()
+        {
+            Console.WriteLine($"Name: {Name} Capacity: {Capacity} Has Projector: {HasProjector}");
+        }
+
 
     }
 }
