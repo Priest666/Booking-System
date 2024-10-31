@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Booking_System
 {
-    internal class Lokal
+    internal class Premises
     {
 
     }
