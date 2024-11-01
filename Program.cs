@@ -2,9 +2,9 @@
 
 namespace Booking_System
 {
-    internal class Program
+    public class Program
     {
-        static List<Booking> BookingList = new List<Booking>();
+        public static List<Booking> BookingList = new List<Booking>();
 
         private static void Menu()
         {
@@ -20,6 +20,11 @@ namespace Booking_System
         {
             Booking booking = new Booking();
             bool runProgram = true;
+            
+            
+            BookingList.Add(booking); //Dummy variable added to list for testing
+            Booking booking2 = new Booking(); 
+            BookingList.Add(booking2); //Dummy variable added to list for testing
 
             while (runProgram)
             {

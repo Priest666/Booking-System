@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace Booking_System
 {
-    internal class Booking : IBookable
+    public class Booking : IBookable
     {
+        
         public void DeleteBooking()
         {
             
@@ -15,7 +17,10 @@ namespace Booking_System
 
         public void ListAllBookings()
         {
-            
+            foreach (var madeBookings in Program.BookingList)
+            {
+                Console.WriteLine("testing, testing.");
+            }
         }
 
         public void ListYear()
