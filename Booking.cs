@@ -60,6 +60,13 @@ namespace Booking_System
                     Console.WriteLine();
                     String BookingName1 = Console.ReadLine().ToLower();
 
+                 
+                    if (Program.BookingList.Any(b => b.BookedPremises.Name.Equals(BookingName1)))
+                    {
+                        Console.WriteLine($"A room of {BookingName1} already exist");
+                        return;
+                    }
+
                     Console.WriteLine("Choose capacity: ");
                     bool isValid = false;
                     int ClassRoomCap;
