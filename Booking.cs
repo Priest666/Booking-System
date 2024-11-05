@@ -88,7 +88,7 @@ namespace Booking_System
             Console.WriteLine("Enter start date and time (YYYY-MM-DD) (00:00:00): ");
             if (DateTime.TryParse(Console.ReadLine(), out DateTime startDate))
             {
-                StartDate = startDate; // Update the start date of the booking.
+                StartDate = startDate; 
             }
             else
             {
@@ -100,7 +100,7 @@ namespace Booking_System
             Console.WriteLine("Enter end date and time (YYYY-MM-DD) (00:00:00): ");
             if (DateTime.TryParse(Console.ReadLine(), out DateTime endDate))
             {
-                EndDate = EndDate; // Update the end date of the booking.
+                EndDate = endDate; 
             }
             else
             {
