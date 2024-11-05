@@ -96,7 +96,6 @@ namespace Booking_System
                 return;
             }
 
-            // Ask the user to enter a new end date for the booking.
             Console.WriteLine("Enter end date and time (YYYY-MM-DD) (00:00:00): ");
             if (DateTime.TryParse(Console.ReadLine(), out DateTime endDate))
             {
