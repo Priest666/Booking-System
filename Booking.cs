@@ -16,6 +16,7 @@ namespace Booking_System
         
         public void DeleteBooking()
         {
+            Console.Clear();
             Console.WriteLine("Which booking do you want to remove?");
             string choose = Console.ReadLine().ToLower();
             bool found = false;
@@ -39,7 +40,7 @@ namespace Booking_System
 
         public void NewBooking()
         {
-
+            Console.Clear();
             Premises selectedRoom = null;
             
             Console.WriteLine("What do you want to book?\n1.Classroom\n2.Grouproom");
@@ -122,16 +123,17 @@ namespace Booking_System
 
         public void ListAllBookings()
         {
+            Console.Clear();
            foreach (var booking in Program.BookingList)
             {
-                string roomType = booking.BookedPremises is ClassRoom ? "Classroom" : "Group room";
+                string roomType = booking.BookedPremises is ClassRoom ? "Classroom" : "Group room";   //added variable to display chosen premise
                 Console.WriteLine($"Room type: {roomType} \nName: {booking.BookedPremises.Name} \nCapacity: {booking.BookedPremises.Capacity} \nStart date: {booking.StartDate} \nEnd date: {booking.EndDate} \n");
-                
             }   
         }
 
         public void ListYear()
         {
+            Console.Clear();
             Console.WriteLine("Select a year to watch the bookings");
             int correctYear = Convert.ToInt32(Console.ReadLine());
             bool found = false;
