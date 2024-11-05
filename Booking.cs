@@ -105,7 +105,10 @@ namespace Booking_System
 
         public void ListAllBookings()
         {
-            
+           foreach (var booking in Program.BookingList)
+            {
+                Console.WriteLine(booking);
+            }   
         }
 
         public void ListYear()
