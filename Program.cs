@@ -4,7 +4,7 @@ namespace Booking_System
 {
     internal class Program
     {
-        static List<Booking> BookingList = new List<Booking>();
+        public static List<Booking> BookingList = new List<Booking>();
 
         private static void Menu()
         {
