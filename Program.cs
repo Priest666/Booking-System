@@ -41,10 +41,10 @@ namespace Booking_System
                         booking.DeleteBooking();
                         break;
                     case "5":
-                        //Gör metoden för års listan senare. 
+                        booking.ListYear(); 
                         break;
                     case "6":
-                        booking.ListYear();
+                        runProgram = false;
                         break;
                     default:
                         Console.WriteLine("Invalid input");
