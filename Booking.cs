@@ -61,7 +61,12 @@ namespace Booking_System
                     String BookingName1 = Console.ReadLine().ToLower();
 
                     Console.WriteLine("Choose capacity: ");
-                    int.TryParse(Console.ReadLine(), out int ClassRoomCap);
+                    bool isValid = false;
+                    int ClassRoomCap;
+                    while (!int.TryParse(Console.ReadLine(), out ClassRoomCap))
+                    {
+                        Console.WriteLine("Invalid input");                    
+                    }
 
                     selectedRoom = new ClassRoom(BookingName1, ClassRoomCap, hasProjector);
 
@@ -75,8 +80,12 @@ namespace Booking_System
                     String BookingName2 = Console.ReadLine();
 
                     Console.WriteLine("Choose capacity: ");
-                    int.TryParse(Console.ReadLine(), out int GroupRoomCap);
-                    
+                    int GroupRoomCap;
+
+                    while (!int.TryParse(Console.ReadLine(), out GroupRoomCap))
+                    {
+                        Console.WriteLine("Invalid input");
+                    }
                     selectedRoom = new GroupRoom(BookingName2, GroupRoomCap, hasProjector = false);
                     break;
 
