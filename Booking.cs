@@ -10,6 +10,9 @@ namespace Booking_System
 {
     internal class Booking : IBookable
     {
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
+        public Premises BookedPremises { get; set; }
         
         public void DeleteBooking()
         {
