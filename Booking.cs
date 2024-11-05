@@ -43,11 +43,11 @@ namespace Booking_System
         }
 
 
-        public void ListAllBookings()
+        public virtual void ListAllBookings()
         {
             foreach (var madeBookings in Program.BookingList)
             {
-                Console.WriteLine("testing, testing.");
+                
             }
         }
 
