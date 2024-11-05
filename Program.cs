@@ -47,7 +47,7 @@ namespace Booking_System
                         //Gör metoden för års listan senare. 
                         break;
                     case "6":
-                        runProgram = false;
+                        booking.ListYear();
                         break;
                     default:
                         Console.WriteLine("Invalid input");
