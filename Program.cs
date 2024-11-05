@@ -23,8 +23,6 @@ namespace Booking_System
             
             
             BookingList.Add(booking); //Dummy variable added to list for testing
-            Booking booking2 = new Booking(); 
-            BookingList.Add(booking2); //Dummy variable added to list for testing
 
             while (runProgram)
             {
