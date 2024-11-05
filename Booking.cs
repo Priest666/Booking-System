@@ -158,12 +158,10 @@ namespace Booking_System
                     Console.WriteLine($"Bookingname: {boc.BookedPremises.Name}, Booked from: {boc.StartDate} To: {boc.EndDate}, Timespan: Days:{span.Days} Minutes:{span.Minutes} Seconds:{span.Seconds}");
                 }
             }
-            Console.ReadLine();
 
             if (!found)
             {
                 Console.WriteLine($"Couldn't find anything from {correctYear}");
-                Console.ReadLine();
             }
         }
 
