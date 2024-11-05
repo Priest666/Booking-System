@@ -107,9 +107,8 @@ namespace Booking_System
         {
            foreach (var booking in Program.BookingList)
             {
-                string roomType = booking.BookedPremises is ClassRoom ? "Classroom" : "Group room";
+                string roomType = booking.BookedPremises is ClassRoom ? "Classroom" : "Group room";   //added variable to display chosen premise
                 Console.WriteLine($"Room type: {roomType} \nName: {booking.BookedPremises.Name} \nCapacity: {booking.BookedPremises.Capacity} \nStart date: {booking.StartDate} \nEnd date: {booking.EndDate} \n");
-                
             }   
         }
 
