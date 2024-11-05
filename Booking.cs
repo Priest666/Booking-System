@@ -68,7 +68,6 @@ namespace Booking_System
                     }
 
                     Console.WriteLine("Choose capacity: ");
-                    bool isValid = false;
                     int ClassRoomCap;
                     while (!int.TryParse(Console.ReadLine(), out ClassRoomCap))
                     {
