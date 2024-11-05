@@ -116,15 +116,17 @@ namespace Booking_System
             Console.WriteLine("Select a year to watch the bookings");
             int correctYear = Convert.ToInt32(Console.ReadLine());
             bool found = false;
+            
 
             foreach (Booking boc in Program.BookingList)
             {
-                
+                TimeSpan span = boc.EndDate - boc.StartDate;
+
                 if (correctYear == boc.StartDate.Year) // Om det år man valde finns med i bokningslistan så skrivs den specifika bokningen ut.
                 {
                     found = true;
                     Console.WriteLine($"This is the bookings from {correctYear}");
-                    Console.WriteLine($"Bookingname: {boc.BookedPremises.Name}, Booked from: {boc.StartDate} To: {boc.EndDate}");
+                    Console.WriteLine($"Bookingname: {boc.BookedPremises.Name}, Booked from: {boc.StartDate} To: {boc.EndDate}, Timespan: Days:{span.Days} Minutes:{span.Minutes} Seconds:{span.Seconds}");
                 }
             }
             Console.ReadLine();
