@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.Linq;
+using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,14 +10,11 @@ namespace Booking_System
 {
     internal class Booking : IBookable
     {
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
-        public Premises BookedPremises { get; set; }
-
+        
         public void DeleteBooking()
         {
             Console.WriteLine("Which booking do you want to remove?");
-            string choose = Console.ReadLine();
+            string choose = Console.ReadLine().ToLower();
             bool found = false;
 
             for (int i = Program.BookingList.Count - 1; i >= 0; i--) // Fick inte till det med en foreach, så denna gör att i börjar på den sista count i listan pga -1 och minskar med ett för varje varv som choose != namnet
@@ -38,7 +36,67 @@ namespace Booking_System
 
         public void NewBooking()
         {
-           
+
+            Premises selectedRoom = null;
+            
+            Console.WriteLine("What do you want to book?\n1.Classroom\n2.Grouproom");
+            Console.WriteLine();
+
+            String UserInput = Console.ReadLine();
+
+            switch (UserInput)
+            {
+                case "1":
+
+                    bool hasProjector = true;
+
+                    Console.WriteLine("You chose to book a Classroom.");
+                    Console.WriteLine();
+                    Console.WriteLine("What is your name? (The booking will go under this name)");
+                    Console.WriteLine();
+                    String BookingName1 = Console.ReadLine().ToLower();
+
+                    Console.WriteLine("Choose capacity: ");
+                    int ClassRoomCap = int.Parse(Console.ReadLine());
+                    
+                    selectedRoom = new ClassRoom(BookingName1, ClassRoomCap, hasProjector);
+
+                    break;
+
+                case "2":
+                    Console.WriteLine("You chose to book a Grouproom.");
+                    Console.WriteLine();
+                    Console.WriteLine("What is your name? (The booking will go under this name)");
+                    Console.WriteLine();
+                    String BookingName2 = Console.ReadLine();
+
+                    Console.WriteLine("Choose capacity: ");
+                    int GroupRoomCap = int.Parse(Console.ReadLine());
+
+                    selectedRoom = new GroupRoom(BookingName2, GroupRoomCap, hasProjector = false);
+                    break;
+
+                default:
+                    Console.WriteLine("Invalid input");
+                    break;
+            }
+
+            Console.WriteLine("Select starting date (YYYY-MM-DD)");
+            DateTime startDate = DateTime.Parse(Console.ReadLine());
+
+            Console.WriteLine("Select ending date (YYYY-MM-DD)");
+            DateTime endDate = DateTime.Parse(Console.ReadLine());
+
+            Booking booking = new Booking()
+            {
+                StartDate = startDate,
+                EndDate = endDate,
+                BookedPremises = selectedRoom
+            };
+            
+            Program.BookingList.Add(booking);
+            Console.WriteLine("A new booking was added");
+
         }
 
 
@@ -71,7 +129,6 @@ namespace Booking_System
                 Console.ReadLine();
             }
         }
-
 
         public void UpdateBooking()
         {
