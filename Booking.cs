@@ -60,8 +60,8 @@ namespace Booking_System
                     String BookingName1 = Console.ReadLine().ToLower();
 
                     Console.WriteLine("Choose capacity: ");
-                    int ClassRoomCap = int.Parse(Console.ReadLine());
-                    
+                    int.TryParse(Console.ReadLine(), out int ClassRoomCap);
+
                     selectedRoom = new ClassRoom(BookingName1, ClassRoomCap, hasProjector);
 
                     break;
@@ -74,8 +74,8 @@ namespace Booking_System
                     String BookingName2 = Console.ReadLine();
 
                     Console.WriteLine("Choose capacity: ");
-                    int GroupRoomCap = int.Parse(Console.ReadLine());
-
+                    int.TryParse(Console.ReadLine(), out int GroupRoomCap);
+                    
                     selectedRoom = new GroupRoom(BookingName2, GroupRoomCap, hasProjector = false);
                     break;
 
@@ -84,11 +84,28 @@ namespace Booking_System
                     break;
             }
 
-            Console.WriteLine("Select starting date (YYYY-MM-DD)");
-            DateTime startDate = DateTime.Parse(Console.ReadLine());
+            Console.WriteLine("Enter start date and time (YYYY-MM-DD) (00:00:00): ");
+            if (DateTime.TryParse(Console.ReadLine(), out DateTime startDate))
+            {
+                StartDate = startDate; // Update the start date of the booking.
+            }
+            else
+            {
+                Console.WriteLine("Invalid start date format. Please use YYYY-MM-DD.");
+                return;
+            }
 
-            Console.WriteLine("Select ending date (YYYY-MM-DD)");
-            DateTime endDate = DateTime.Parse(Console.ReadLine());
+            // Ask the user to enter a new end date for the booking.
+            Console.WriteLine("Enter end date and time (YYYY-MM-DD) (00:00:00): ");
+            if (DateTime.TryParse(Console.ReadLine(), out DateTime endDate))
+            {
+                EndDate = EndDate; // Update the end date of the booking.
+            }
+            else
+            {
+                Console.WriteLine("Invalid end date format. Please use YYYY-MM-DD.");
+                return;
+            }
 
             Booking booking = new Booking()
             {
