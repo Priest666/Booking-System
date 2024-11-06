@@ -26,12 +26,6 @@ namespace Booking_System
         public static void Main(string[] args)
         {
 
-            // Hårdkoda några lokaler för testning
-            PremisesList.Add(new ClassRoom("Room 1", 30, true));
-            PremisesList.Add(new ClassRoom("Room 12", 25, true));
-            PremisesList.Add(new GroupRoom("Group Room A", 15, false));
-            PremisesList.Add(new GroupRoom("Group Room B", 10, false));
-
             LoadPremisesFromFile(); // Ladda lokaler vid uppstart.
             Booking booking = new Booking();
             bool runProgram = true;
@@ -87,12 +81,18 @@ namespace Booking_System
 
         public static void LoadPremisesFromFile()
         {
+            PremisesList.Add(new ClassRoom("Room 101", 30, true));
+            PremisesList.Add(new ClassRoom("Room 102", 25, true));
+            PremisesList.Add(new GroupRoom("Group Room A", 15, false));
+            PremisesList.Add(new GroupRoom("Group Room B", 10, false));
 
+            SavePremisesToFile();
         }
 
         public static void SavePremisesToFile()
         {
-
+            var json = JsonSerializer.Serialize(PremisesList);
+            File.WriteAllText(PremisesFile, json);
         }
 
     }
