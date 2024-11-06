@@ -71,7 +71,7 @@ namespace Booking_System
 
         public static void ListAllPremises()
         {
-
+            
         }
 
         public static void CreateNewPremises()
