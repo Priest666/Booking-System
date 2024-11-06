@@ -51,13 +51,11 @@ namespace Booking_System
             switch (UserInput)
             {
                 case "1":
-
                     bool hasProjector = true;
 
                     Console.WriteLine("You chose to book a Classroom.");
                     Console.WriteLine();
                     Console.WriteLine("What is your name? (The booking will go under this name)");
-                    Console.WriteLine();
                     String BookingName1 = Console.ReadLine().ToLower();
 
                  
@@ -65,9 +63,16 @@ namespace Booking_System
                     {
                         Console.WriteLine($"A room of {BookingName1} already exist");
                         return;
+                    } 
+                    else if (String.IsNullOrEmpty(BookingName1) || !BookingName1.All(char.IsAsciiLetter))
+                    {
+                        Console.WriteLine("Invalid input, please enter a name that only contains letters");
+                        Console.ReadLine();
+                        return;
                     }
 
                     Console.WriteLine("Choose capacity: ");
+                    bool isValid = false;
                     int ClassRoomCap;
                     while (!int.TryParse(Console.ReadLine(), out ClassRoomCap))
                     {
@@ -82,8 +87,19 @@ namespace Booking_System
                     Console.WriteLine("You chose to book a Grouproom.");
                     Console.WriteLine();
                     Console.WriteLine("What is your name? (The booking will go under this name)");
-                    Console.WriteLine();
                     String BookingName2 = Console.ReadLine();
+
+                    if (Program.BookingList.Any(b => b.BookedPremises.Name.Equals(BookingName2)))
+                    {
+                        Console.WriteLine($"A room of {BookingName2} already exist");
+                        return;
+                    }
+                    else if (String.IsNullOrEmpty(BookingName2) || !BookingName2.All(char.IsAsciiLetter))
+                    {
+                        Console.WriteLine("Invalid input, please enter a name that only contains letters");
+                        Console.ReadLine();
+                        return;
+                    }
 
                     Console.WriteLine("Choose capacity: ");
                     int GroupRoomCap;
