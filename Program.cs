@@ -81,8 +81,8 @@ namespace Booking_System
 
         public static void LoadPremisesFromFile()
         {
-            PremisesList.Add(new ClassRoom("Room 101", 30, true));
-            PremisesList.Add(new ClassRoom("Room 102", 25, true));
+            PremisesList.Add(new ClassRoom("Classroom 101", 30, true));
+            PremisesList.Add(new ClassRoom("Classroom 102", 25, true));
             PremisesList.Add(new GroupRoom("Group Room A", 15, false));
             PremisesList.Add(new GroupRoom("Group Room B", 10, false));
 
