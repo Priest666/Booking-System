@@ -1,10 +1,15 @@
 ﻿using System.ComponentModel.Design;
+using System.Text.Json;
+using System.IO;
+
 
 namespace Booking_System
 {
     internal class Program
     {
         public static List<Booking> BookingList = new List<Booking>();
+        public static List<Premises> PremisesList = new List<Premises>();
+        private static string PremisesFile = "premises.json";
 
         private static void Menu()
         {
@@ -13,11 +18,14 @@ namespace Booking_System
             Console.WriteLine("3. Update booking");
             Console.WriteLine("4. Delete booking");
             Console.WriteLine("5. List specific year booking.");
-            Console.WriteLine("6. Exit");
+            Console.WriteLine("6. List all premises");
+            Console.WriteLine("7. Create new premises");
+            Console.WriteLine("8. Exit");
         }
 
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
+            LoadPremisesFromFile(); // Ladda lokaler vid uppstart.
             Booking booking = new Booking();
             bool runProgram = true;
 
@@ -41,9 +49,16 @@ namespace Booking_System
                         booking.DeleteBooking();
                         break;
                     case "5":
-                        booking.ListYear(); 
+                        booking.ListYear();
                         break;
                     case "6":
+                        ListAllPremises();
+                        break;
+                    case "7":
+                        CreateNewPremises();
+                        break;
+                    case "8":
+                        SavePremisesToFile();
                         runProgram = false;
                         break;
                     default:
@@ -52,6 +67,26 @@ namespace Booking_System
                 }
             }
         }
-       
+
+        public static void ListAllPremises()
+        {
+
+        }
+
+        public static void CreateNewPremises()
+        {
+
+        }
+
+        public static void LoadPremisesFromFile()
+        {
+
+        }
+
+        public static void SavePremisesToFile()
+        {
+
+        }
+
     }
 }
