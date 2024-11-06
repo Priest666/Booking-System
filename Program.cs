@@ -71,7 +71,10 @@ namespace Booking_System
 
         public static void ListAllPremises()
         {
-
+            foreach (var premises in PremisesList)
+            {
+                Console.WriteLine($"Available rooms: {premises.Name}, Max capacity: {premises.Capacity}");
+            }
         }
 
         public static void CreateNewPremises()
