@@ -73,7 +73,7 @@ namespace Booking_System
         {
             foreach (var premises in PremisesList)
             {
-                Console.WriteLine($"Available rooms: {premises.Name}, Max capacity: {premises.Capacity}");
+                Console.WriteLine($"Room name: {premises.Name}, Max capacity: {premises.Capacity}");
             }
         }
 
