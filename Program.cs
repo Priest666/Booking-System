@@ -71,9 +71,12 @@ namespace Booking_System
 
         public static void ListAllPremises()
         {
+            var boe = new ClassRoom("jacob", 69, false);  //dummy object
+            PremisesList.Add(boe);
             foreach (var premises in PremisesList)
             {
-                Console.WriteLine($"Room name: {premises.Name}, Max capacity: {premises.Capacity}");
+                Console.WriteLine($"Room name: {premises.Name}, Max capacity: {premises.Capacity}, {premises.Print()}");
+
             }
         }
 
