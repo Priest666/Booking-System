@@ -18,5 +18,11 @@ namespace Booking_System
             Capacity = capacity;
         }
 
+
+        public virtual string Print()
+        {
+            return "Base class method";
+        }
+
     }
 }

@@ -15,6 +15,10 @@ namespace Booking_System
             HasWhiteboard = hasWhiteboard;
         }
 
-        
+        public override string Print()
+        {
+            return "Available whiteboard: " + HasWhiteboard + ".";
+        }
+
     }
 }
