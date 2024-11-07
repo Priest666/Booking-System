@@ -15,12 +15,7 @@ namespace Booking_System
         public Premises BookedPremises { get; set; }
 
 
-        public bool IsRoomAvailable(DateTime start1, DateTime start2, DateTime end1, DateTime end2) //Kommer kanske ta bort.
-        {
-            return start1 < end2 && start2 < end1; 
-        }
-
-
+      
         public void DeleteBooking()
         {
             Console.Clear();
