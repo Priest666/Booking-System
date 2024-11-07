@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Booking_System
 {
-    abstract class Premises
+    internal class Premises
     {
         public string Name { get; set; }
         public int Capacity { get; set; }
@@ -18,6 +18,5 @@ namespace Booking_System
             Capacity = capacity;
         }
 
-        public abstract void DisplayInfo();
     }
 }
