@@ -14,6 +14,13 @@ namespace Booking_System
         public DateTime EndDate { get; set; }
         public Premises BookedPremises { get; set; }
 
+
+        public bool IsRoomAvailable(DateTime start1, DateTime start2, DateTime end1, DateTime end2) //Kommer kanske ta bort.
+        {
+            return start1 < end2 && start2 < end1; 
+        }
+
+
         public void DeleteBooking()
         {
             Console.Clear();
@@ -41,117 +48,35 @@ namespace Booking_System
         public void NewBooking()
         {
             Console.Clear();
-            Premises selectedRoom = null;
+            Console.WriteLine("Choose a premises to book:");
+            Program.ListAllPremises();
 
-            Console.WriteLine("What do you want to book?\n1.Classroom\n2.Grouproom");
-            Console.WriteLine();
+            Console.WriteLine("Enter the name of the premises you want to book:");
+            string bookingName = Console.ReadLine().ToLower();
 
-            String UserInput = Console.ReadLine();
-
-            switch (UserInput)
+            var selectedRoom = Program.PremisesList.FirstOrDefault(p => p.Name.Equals(bookingName, StringComparison.OrdinalIgnoreCase));
+            if (selectedRoom == null)
             {
-                case "1":
-                    bool hasProjector = true;
-
-                    Console.WriteLine("You chose to book a Classroom.");
-                    Console.WriteLine();
-                    Console.WriteLine("What is your name? (The booking will go under this name)");
-                    String BookingName1 = Console.ReadLine().ToLower();
-
-
-                    if (Program.BookingList.Any(b => b.BookedPremises.Name.Equals(BookingName1)))
-                    {
-                        Console.WriteLine($"A room of {BookingName1} already exist");
-                        return;
-                    }
-                    else if (String.IsNullOrEmpty(BookingName1) || !BookingName1.All(char.IsLetter)) // Om bookingname innehåller något annat än bokstäver blir det invalid input
-                    {
-                        Console.WriteLine("Invalid input, please enter a name that only contains letters");
-                        Console.ReadLine();
-                        return;
-                    }
-
-                    Console.WriteLine("Choose capacity: ");
-                    int ClassRoomCap;
-                    while (!int.TryParse(Console.ReadLine(), out ClassRoomCap))
-                    {
-                        Console.WriteLine("Invalid input");
-                    }
-
-                    selectedRoom = new ClassRoom(BookingName1, ClassRoomCap, hasProjector);
-
-                    break;
-
-                case "2":
-                    Console.WriteLine("You chose to book a Grouproom.");
-                    Console.WriteLine();
-                    Console.WriteLine("What is your name? (The booking will go under this name)");
-                    String BookingName2 = Console.ReadLine();
-
-                    if (Program.BookingList.Any(b => b.BookedPremises.Name.Equals(BookingName2)))
-                    {
-                        Console.WriteLine($"A room of {BookingName2} already exist");
-                        return;
-                    }
-                    if (String.IsNullOrEmpty(BookingName2) || !BookingName2.All(char.IsLetter))
-                    {
-                        Console.WriteLine("Invalid input, please enter a name that only contains letters");
-                        Console.ReadLine();
-                        return;
-                    }
-
-                    Console.WriteLine("Choose capacity: ");
-                    int GroupRoomCap;
-
-                    while (!int.TryParse(Console.ReadLine(), out GroupRoomCap))
-                    {
-                        Console.WriteLine("Invalid input");
-                    }
-                    selectedRoom = new GroupRoom(BookingName2, GroupRoomCap, hasProjector = false);
-                    break;
-
-                default:
-                    Console.WriteLine("Invalid input");
-                    break;
+                Console.WriteLine($"No premises with the name {bookingName} was found.");
+                return;
             }
 
-            Console.WriteLine("Enter start date and time (YYYY-MM-DD) (00:00) ");
-            if (DateTime.TryParse(Console.ReadLine(), out DateTime startDate))
-            {
-                StartDate = startDate;
-                if (startDate < DateTime.Now) // Gör att man inte kan boka bakåt i tiden
-                {
-                    Console.WriteLine("Can't make a booking thats back in time");
-                    Console.ReadLine();
-                    return;
-                }
-            }
-            else
+         
+            Console.WriteLine("Enter start date and time (YYYY-MM-DD) (00:00:00): ");
+            if (!DateTime.TryParse(Console.ReadLine(), out DateTime startDate))
             {
                 Console.WriteLine("Invalid start date format. Please use YYYY-MM-DD.");
                 return;
             }
 
-
-
-            Console.WriteLine("Enter end date and time (YYYY-MM-DD) (00:00) ");
-            if (DateTime.TryParse(Console.ReadLine(), out DateTime endDate))
-            {
-                EndDate = endDate;
-                if (endDate < startDate) // Gör att en bokning inte kan sluta innan den börjat.
-                {
-                    Console.WriteLine("Can't make the booking end before its start");
-                    Console.ReadLine();
-                    return;
-                }
-            }
-            else
+            Console.WriteLine("Enter end date and time (YYYY-MM-DD) (00:00:00): ");
+            if (!DateTime.TryParse(Console.ReadLine(), out DateTime endDate))
             {
                 Console.WriteLine("Invalid end date format. Please use YYYY-MM-DD.");
                 return;
             }
 
-
+            
 
             Booking booking = new Booking()
             {
@@ -160,11 +85,10 @@ namespace Booking_System
                 BookedPremises = selectedRoom
             };
 
-            Program.BookingList.Add(booking);
-            Console.WriteLine("A new booking was added");
-
+                Program.BookingList.Add(booking);
+                Console.WriteLine("A new booking has been added");
+                        
         }
-
 
         public void ListAllBookings()
         {
@@ -204,70 +128,67 @@ namespace Booking_System
 
         public void UpdateBooking()
         {
-
             Console.Clear();
 
-            // Prompt the user to enter the name of the room whose booking they wish to update.
-            Console.Write("Enter room name to update booking: ");
+            // Be användaren att ange namnet på rummet vars bokning de vill uppdatera.
+            Console.Write("Ange rumsnamn för att uppdatera bokning: ");
             string roomName = Console.ReadLine();
 
-            // Search for the booking associated with the specified room name.
+            // Sök efter bokningen associerad med det angivna rumsnamnet.
             var booking = Program.BookingList.FirstOrDefault(b => b.BookedPremises.Name == roomName);
 
-            // If a booking is found, proceed with the update.
+            // Om en bokning hittas, fortsätt med uppdateringen.
             if (booking != null)
             {
-                // Ask the user to enter a new start date for the booking.
-                Console.WriteLine("Enter new start date and time (YYYY-MM-DD) (00:00) ");
+                // Be användaren att ange ett nytt startdatum för bokningen.
+                Console.WriteLine("Ange nytt startdatum och tid (YYYY-MM-DD) (00:00) ");
                 if (DateTime.TryParse(Console.ReadLine(), out DateTime newStartDate))
                 {
                     if (newStartDate < DateTime.Now)
                     {
-                        Console.WriteLine("Can't make a booking thats back in time");
+                        Console.WriteLine("Kan inte boka ett rum i det förflutna");
                         Console.ReadLine();
                         return;
                     }
 
-                    // Ask the user to enter a new end date for the booking.
-                    Console.WriteLine("Enter new end date and time (YYYY-MM-DD) (00:00) ");
+                    // Be användaren att ange ett nytt slutdatum för bokningen.
+                    Console.WriteLine("Ange nytt slutdatum och tid (YYYY-MM-DD) (00:00) ");
                     if (DateTime.TryParse(Console.ReadLine(), out DateTime newEndDate))
                     {
 
                         if (newEndDate < newStartDate)
                         {
-                            Console.WriteLine("Can't make a booking to end before its start");
+                            Console.WriteLine("Kan inte boka ett rum som slutar före starttid");
                             Console.ReadLine();
                             return;
                         }
                         else
                         {
-                            booking.StartDate = newStartDate; // Update the start date of the booking.
-                            booking.EndDate = newEndDate; // Update the end date of the booking.
+                            booking.StartDate = newStartDate; // Uppdatera startdatumet för bokningen.
+                            booking.EndDate = newEndDate; // Uppdatera slutdatumet för bokningen.
                         }
                     }
                     else
                     {
-                        Console.WriteLine("Invalid end date format. Please use YYYY-MM-DD.");
+                        Console.WriteLine("Ogiltigt slutdatumformat. Vänligen använd YYYY-MM-DD.");
                         return;
                     }
 
-                    // Confirm to the user that the booking update was successful.
-                    Console.WriteLine($"Updated booking of room {roomName} has been successful!");
+                    // Bekräfta för användaren att bokningen har uppdaterats.
+                    Console.WriteLine($"Bokningen av rummet {roomName} har uppdaterats framgångsrikt!");
                 }
                 else
                 {
-                    Console.WriteLine("Invalid start date format. Please use YYYY-MM-DD.");
+                    Console.WriteLine("Ogiltigt startdatumformat. Vänligen använd YYYY-MM-DD.");
                     return;
                 }
 
             }
-            // If no booking was found for the given room name, notify the user.
+            // Om ingen bokning hittades för det angivna rumsnamnet, informera användaren.
             else
             {
-                Console.WriteLine($"No booking of {roomName} was found.");
+                Console.WriteLine($"Ingen bokning av {roomName} hittades.");
             }
         }
-
-
     }
 }

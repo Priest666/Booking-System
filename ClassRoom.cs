@@ -17,10 +17,7 @@ namespace Booking_System
             HasProjector = hasProjector;
         }
 
-        public override void DisplayInfo()
-        {
-            Console.WriteLine($"Name: {Name} Capacity: {Capacity} Has Projector: {HasProjector}");
-        }
+       
 
 
     }
