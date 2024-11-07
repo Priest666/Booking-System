@@ -71,7 +71,13 @@ namespace Booking_System
                 return;
             }
 
-            
+            bool isBooked = Program.BookingList.Any(b => b.BookedPremises.Name == selectedRoom.Name && startDate >= b.StartDate && startDate < b.EndDate);
+                                                   
+            if (isBooked)
+            {
+                Console.WriteLine($"dota 2 är bättre");
+                return;
+            }
 
             Booking booking = new Booking()
             {

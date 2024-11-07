@@ -9,7 +9,7 @@ namespace Booking_System
     {
         public static List<Booking> BookingList = new List<Booking>();
         public static List<Premises> PremisesList = new List<Premises>();
-        private static string PremisesFile = "premises.json";
+        private static readonly string PremisesFile = "premises.json";
 
         private static void Menu()
         {
