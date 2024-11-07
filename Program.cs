@@ -110,7 +110,7 @@ namespace Booking_System
                 input = Console.ReadLine().ToLower();
             }
 
-            bool hasProjector = input == "yes";
+            bool hasProjector = input == "yes"; 
 
             Premises newPremises;
 
