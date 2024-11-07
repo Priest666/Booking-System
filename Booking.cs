@@ -131,7 +131,7 @@ namespace Booking_System
             Console.Clear();
 
             // Be användaren att ange namnet på rummet vars bokning de vill uppdatera.
-            Console.Write("Ange rumsnamn för att uppdatera bokning: ");
+            Console.Write("Enter the name of the room to update booking: ");
             string roomName = Console.ReadLine();
 
             // Sök efter bokningen associerad med det angivna rumsnamnet.
@@ -141,24 +141,24 @@ namespace Booking_System
             if (booking != null)
             {
                 // Be användaren att ange ett nytt startdatum för bokningen.
-                Console.WriteLine("Ange nytt startdatum och tid (YYYY-MM-DD) (00:00) ");
+                Console.WriteLine("Enter a new date and time (YYYY-MM-DD) (00:00) ");
                 if (DateTime.TryParse(Console.ReadLine(), out DateTime newStartDate))
                 {
                     if (newStartDate < DateTime.Now)
                     {
-                        Console.WriteLine("Kan inte boka ett rum i det förflutna");
+                        Console.WriteLine("Can't make a booking in the past");
                         Console.ReadLine();
                         return;
                     }
 
                     // Be användaren att ange ett nytt slutdatum för bokningen.
-                    Console.WriteLine("Ange nytt slutdatum och tid (YYYY-MM-DD) (00:00) ");
+                    Console.WriteLine("Enter a new enddate and time (YYYY-MM-DD) (00:00) ");
                     if (DateTime.TryParse(Console.ReadLine(), out DateTime newEndDate))
                     {
 
                         if (newEndDate < newStartDate)
                         {
-                            Console.WriteLine("Kan inte boka ett rum som slutar före starttid");
+                            Console.WriteLine("Cant book a room that ends before it starts");
                             Console.ReadLine();
                             return;
                         }
@@ -170,16 +170,16 @@ namespace Booking_System
                     }
                     else
                     {
-                        Console.WriteLine("Ogiltigt slutdatumformat. Vänligen använd YYYY-MM-DD.");
+                        Console.WriteLine("Invalid input, please use YYYY-MM-DD.");
                         return;
                     }
 
                     // Bekräfta för användaren att bokningen har uppdaterats.
-                    Console.WriteLine($"Bokningen av rummet {roomName} har uppdaterats framgångsrikt!");
+                    Console.WriteLine($"The booking of {roomName} has been updated successfully!");
                 }
                 else
                 {
-                    Console.WriteLine("Ogiltigt startdatumformat. Vänligen använd YYYY-MM-DD.");
+                    Console.WriteLine("Invalid input, please use: YYYY-MM-DD.");
                     return;
                 }
 
@@ -187,7 +187,7 @@ namespace Booking_System
             // Om ingen bokning hittades för det angivna rumsnamnet, informera användaren.
             else
             {
-                Console.WriteLine($"Ingen bokning av {roomName} hittades.");
+                Console.WriteLine($"No booking of {roomName} was found");
             }
         }
     }
