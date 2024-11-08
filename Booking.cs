@@ -15,7 +15,7 @@ namespace Booking_System
         public Premises BookedPremises { get; set; }
 
 
-      
+
         public void DeleteBooking()
         {
             Console.Clear();
@@ -56,26 +56,46 @@ namespace Booking_System
                 return;
             }
 
-         
-            Console.WriteLine("Enter start date and time (YYYY-MM-DD) (00:00:00): ");
+
+            Console.WriteLine("Enter start date and time (YYYY-MM-DD) (00:00): ");
             if (!DateTime.TryParse(Console.ReadLine(), out DateTime startDate))
             {
                 Console.WriteLine("Invalid start date format. Please use YYYY-MM-DD.");
                 return;
             }
+            if (startDate <  DateTime.Now)
+            {
+                Console.WriteLine("Can't make a booking back in time");
+                Console.ReadLine();
+                return;
+            }
 
-            Console.WriteLine("Enter end date and time (YYYY-MM-DD) (00:00:00): ");
+            Console.WriteLine("Enter end date and time (YYYY-MM-DD) (00:00): ");
             if (!DateTime.TryParse(Console.ReadLine(), out DateTime endDate))
             {
                 Console.WriteLine("Invalid end date format. Please use YYYY-MM-DD.");
                 return;
             }
+            if (endDate < startDate)
+            {
+                Console.WriteLine("Cant book a room that ends before it starts");
+                Console.ReadLine();
+                return;
+            }
+
+            TimeSpan bookingspan = endDate - startDate; // Gör att en bokning inte kan ha ett tidsspan på längre än 5 dagar. 
+            if (bookingspan > TimeSpan.FromDays(5))
+            {
+                Console.WriteLine("Cant do a booking for longer than 5 days, please adjust your booking or make several ones.");
+                Console.ReadLine();
+                return;
+            }
 
             bool isBooked = Program.BookingList.Any(b => b.BookedPremises.Name == selectedRoom.Name && startDate >= b.StartDate && startDate < b.EndDate);
-                                                   
+
             if (isBooked)
             {
-                Console.WriteLine($"dota 2 är bättre");
+                Console.WriteLine("This room is already booked during this period");
                 return;
             }
 
@@ -86,9 +106,9 @@ namespace Booking_System
                 BookedPremises = selectedRoom
             };
 
-                Program.BookingList.Add(booking);
-                Console.WriteLine("A new booking has been added");
-                        
+            Program.BookingList.Add(booking);
+            Console.WriteLine("A new booking has been added");
+
         }
 
         public void ListAllBookings()
@@ -117,7 +137,7 @@ namespace Booking_System
                 {
                     found = true;
                     Console.WriteLine($"This is the bookings from {correctYear}");
-                    Console.WriteLine($"Bookingname: {boc.BookedPremises.Name}, Booked from: {boc.StartDate} To: {boc.EndDate}, Timespan: Days:{span.Days} Minutes:{span.Minutes} Seconds:{span.Seconds}");
+                    Console.WriteLine($"Bookingname: {boc.BookedPremises.Name}, Booked from: {boc.StartDate} To: {boc.EndDate}, Timespan: Days:{span.Days} Minutes:{span.Minutes}");
                 }
             }
 
@@ -135,8 +155,9 @@ namespace Booking_System
             Console.Write("Enter the name of the room to update booking: ");
             string roomName = Console.ReadLine();
 
-            // Sök efter bokningen associerad med det angivna rumsnamnet.
-            var booking = Program.BookingList.FirstOrDefault(b => b.BookedPremises.Name == roomName);
+            // Sök efter bokningen associerad med det angivna rumsnamnet, detta gör även så att det inte spelar någon roll om man skriver med stor bokstav eller ej.
+            var booking = Program.BookingList.FirstOrDefault(b => string.Equals (b.BookedPremises.Name, roomName, StringComparison.OrdinalIgnoreCase));
+            
 
             // Om en bokning hittas, fortsätt med uppdateringen.
             if (booking != null)
@@ -153,13 +174,20 @@ namespace Booking_System
                     }
 
                     // Be användaren att ange ett nytt slutdatum för bokningen.
-                    Console.WriteLine("Enter a new enddate and time (YYYY-MM-DD) (00:00) ");
+                    Console.WriteLine("Enter a new end date and time (YYYY-MM-DD) (00:00) ");
                     if (DateTime.TryParse(Console.ReadLine(), out DateTime newEndDate))
                     {
 
                         if (newEndDate < newStartDate)
                         {
                             Console.WriteLine("Cant book a room that ends before it starts");
+                            Console.ReadLine();
+                            return;
+                        }
+                        TimeSpan bookingspan = newEndDate - newStartDate; // Samma som i newbooking, gör att man inte ej boka längre än 5 dagar. 
+                        if (bookingspan > TimeSpan.FromDays(5))
+                        {
+                            Console.WriteLine("Cant do a booking for longer than 5 days, please adjust your booking or make several ones.");
                             Console.ReadLine();
                             return;
                         }
