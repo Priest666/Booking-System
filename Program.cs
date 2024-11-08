@@ -145,10 +145,10 @@ namespace Booking_System
                 Console.WriteLine(e.Message);
             }     
 
-            if (PremisesList.Count == 0)
+            if (PremisesList.Count == 0) 
             {
-                PremisesList.Add(new ClassRoom("Classroom 101", 30, true));
-                PremisesList.Add(new ClassRoom("Classroom 102", 25, true));
+                PremisesList.Add(new ClassRoom("Classroom 1", 30, true)); //Default salar.
+                PremisesList.Add(new ClassRoom("Classroom 2", 25, true));
                 PremisesList.Add(new GroupRoom("Group Room A", 15, false));
                 PremisesList.Add(new GroupRoom("Group Room B", 10, false));
             }
