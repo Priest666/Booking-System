@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.Design;
 using System.Text.Json;
 using System.IO;
+using Booking_System;
 
 
 namespace Booking_System
@@ -71,12 +72,9 @@ namespace Booking_System
 
         public static void ListAllPremises()
         {
-            //var boe = new ClassRoom("jacob", 69, false);  //dummy object
-            //PremisesList.Add(boe);
             foreach (var premises in PremisesList)
             {
                 Console.WriteLine($"Room name: {premises.Name}, Max capacity: {premises.Capacity}, {premises.Print()}");
-
             }
         }
 
@@ -99,37 +97,70 @@ namespace Booking_System
                 return;
             }
 
-            Console.WriteLine("Enter capacity:");
-            int capacity;
-            while (!int.TryParse(Console.ReadLine(), out capacity))
+            Console.WriteLine("Press 1 to make a classroom.");
+            Console.WriteLine("Press 2 to make a grouproom.");
+
+            int premiseChoice;
+            while (!int.TryParse(Console.ReadLine(), out premiseChoice) || (premiseChoice != 1 && premiseChoice != 2)) //only 1 or 2 are valid answers
             {
-                Console.WriteLine("Invalid input.");
+                Console.WriteLine("Invalid input. Enter 1 or 2:");
             }
 
-            Console.WriteLine("Do you want the premises to have a projector? (yes/no):");
-            string input = Console.ReadLine().ToLower();
-
-            while (input != "yes" && input != "no")
+            Premises newPremises; // declaring new object
+            
+            if (premiseChoice == 1) // creating a classroom
             {
-                Console.WriteLine("Invalid input. Enter yes or no:");
-                input = Console.ReadLine().ToLower();
+                Console.WriteLine("Enter capacity:");
+                int capacity;
+                while (!int.TryParse(Console.ReadLine(), out capacity))
+                {
+                   Console.WriteLine("Invalid input.");
+                }
+
+                Console.WriteLine("Do you want the premises to have a projector? (yes/no):");
+                string input = Console.ReadLine().ToLower();
+
+                while (input != "yes" && input != "no")
+                {
+                    Console.WriteLine("Invalid input. Enter yes or no:");
+                    input = Console.ReadLine().ToLower();
+                }
+                
+                bool hasProjector = input == "yes";  // sets "hasProjector" based on the users input
+
+                //create new ClassRoom instance with the user inputed details
+                newPremises = new ClassRoom(name, capacity, hasProjector);  
+                PremisesList.Add(newPremises);
+
+                Console.WriteLine($"successfully created new premise by the name of: {newPremises.Name}");
             }
 
-            bool hasProjector = input == "yes"; 
-
-            Premises newPremises;
-
-            if (hasProjector == true)
+            if (premiseChoice == 2) // creating a group room
             {
-                newPremises = new ClassRoom(name, capacity, hasProjector);
-            }
-            else
-            {
-                newPremises = new GroupRoom(name, capacity, hasProjector);
-            }
+                Console.WriteLine("Enter capacity:");
+                int capacity;
+                while (!int.TryParse(Console.ReadLine(), out capacity))
+                {
+                    Console.WriteLine("Invalid input.");
+                }
 
-            PremisesList.Add(newPremises);
-            Console.WriteLine($"{(hasProjector ? "Classroom" : "Group Room")} {newPremises.Name} was created!");
+                Console.WriteLine("Do you want the premises to have a whiteboard? (yes/no):");
+                string input = Console.ReadLine().ToLower();
+
+                while (input != "yes" && input != "no")
+                {
+                    Console.WriteLine("Invalid input. Enter yes or no:");
+                    input = Console.ReadLine().ToLower();
+                }
+
+                bool hasWhiteboard = input == "yes";  // sets "hasWhiteboard" based on the users input
+
+                //create new ClassRoom instance with the user inputed details
+                newPremises = new GroupRoom(name, capacity, hasWhiteboard);
+                PremisesList.Add(newPremises);
+
+                Console.WriteLine($"successfully created new premise by the name of: {newPremises.Name}");
+            }
         }
 
         public static void LoadPremisesFromFile()
@@ -148,8 +179,8 @@ namespace Booking_System
             if (PremisesList.Count == 0)
             {
                 PremisesList.Add(new ClassRoom("Classroom 101", 30, true));
-                PremisesList.Add(new ClassRoom("Classroom 102", 25, true));
-                PremisesList.Add(new GroupRoom("Group Room A", 15, false));
+                PremisesList.Add(new ClassRoom("Classroom 102", 25, false));
+                PremisesList.Add(new GroupRoom("Group Room A", 15, true));
                 PremisesList.Add(new GroupRoom("Group Room B", 10, false));
             }
         }
