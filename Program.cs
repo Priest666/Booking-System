@@ -20,7 +20,7 @@ namespace Booking_System
             Console.WriteLine("5. List specific year booking.");
             Console.WriteLine("6. List all premises");
             Console.WriteLine("7. Create new premises");
-            Console.WriteLine("8. Exit");
+            Console.WriteLine("8. Save and Exit");
         }
 
         public static void Main(string[] args)
@@ -71,8 +71,8 @@ namespace Booking_System
 
         public static void ListAllPremises()
         {
-            var boe = new ClassRoom("jacob", 69, false);  //dummy object
-            PremisesList.Add(boe);
+            //var boe = new ClassRoom("jacob", 69, false);  //dummy object
+            //PremisesList.Add(boe);
             foreach (var premises in PremisesList)
             {
                 Console.WriteLine($"Room name: {premises.Name}, Max capacity: {premises.Capacity}, {premises.Print()}");
@@ -82,6 +82,8 @@ namespace Booking_System
 
         public static void CreateNewPremises()
         {
+            Console.Clear();
+
             Console.WriteLine("Enter name for the premises:");
             string name = Console.ReadLine();
             while (string.IsNullOrWhiteSpace(name))
