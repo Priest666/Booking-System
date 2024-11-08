@@ -19,8 +19,9 @@ namespace Booking_System
         public void DeleteBooking()
         {
             Console.Clear();
+            ListAllBookings();
             Console.WriteLine("Which booking do you want to remove?");
-            string choose = Console.ReadLine().ToLower();
+            string choose = Console.ReadLine();
             bool found = false;
 
             for (int i = Program.BookingList.Count - 1; i >= 0; i--) // Fick inte till det med en foreach, så denna gör att i börjar på den sista count i listan pga -1 och minskar med ett för varje varv som choose != namnet
@@ -43,7 +44,7 @@ namespace Booking_System
         public void NewBooking()
         {
             Console.Clear();
-            Console.WriteLine("Choose a premises to book:");
+            Console.WriteLine("Choose a premises to book\n");
             Program.ListAllPremises();
 
             Console.WriteLine("Enter the name of the premises you want to book:");
@@ -150,6 +151,9 @@ namespace Booking_System
         public void UpdateBooking()
         {
             Console.Clear();
+
+            Console.WriteLine("Active bookings\n");
+            ListAllBookings();
 
             // Be användaren att ange namnet på rummet vars bokning de vill uppdatera.
             Console.Write("Enter the name of the room to update booking: ");
