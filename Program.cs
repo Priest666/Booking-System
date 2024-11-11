@@ -175,26 +175,32 @@ namespace Booking_System
         // Metod för att ladda lokaler från en JSON-fil.
         public static void LoadPremisesFromFile()
         {
-            try // Använder try catch ifall något går fel.
+            if (!File.Exists(PremisesFile)) // Kontrollera om filen redan finns.
             {
-                string jsonData = File.ReadAllText(PremisesFile); // Läser JSON-data från filen.
-
-                PremisesList = JsonSerializer.Deserialize<List<Premises>>(jsonData); // Deserialiserar JSON till listan.
-            }
-            catch (Exception e) 
-            {
-                Console.WriteLine(e.Message);
-            }
-
-            // Default salar.
-            if (PremisesList.Count == 0)
-            {
+                // Default lokaler
                 PremisesList.Add(new ClassRoom("Classroom 1", 30, true));
                 PremisesList.Add(new ClassRoom("Classroom 2", 25, false));
                 PremisesList.Add(new GroupRoom("Group Room A", 15, true));
                 PremisesList.Add(new GroupRoom("Group Room B", 10, false));
+
+                SavePremisesToFile(); // Skapa filen och spara standardlistan.
+                Console.WriteLine("Premises file created with default premises.");
+            }
+            else
+            {
+                // Om filen finns, ladda lokaler från filen.
+                try // Har try catch ifall något går fel.
+                {
+                    string jsonData = File.ReadAllText(PremisesFile);
+                    PremisesList = JsonSerializer.Deserialize<List<Premises>>(jsonData);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
             }
         }
+
 
         // Metod för att spara lokaler till en JSON-fil.
         public static void SavePremisesToFile()
