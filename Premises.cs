@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace Booking_System
 {
+    //Bas klass
     internal class Premises
     {
         public string Name { get; set; }
@@ -17,7 +18,6 @@ namespace Booking_System
             Name = name;
             Capacity = capacity;
         }
-
 
         public virtual string Print()
         {

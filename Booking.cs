@@ -12,44 +12,47 @@ namespace Booking_System
     {
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public Premises BookedPremises { get; set; }
+        public Premises BookedPremises { get; set; } // Den specifika lokalen som är bokad.
 
-
-
+        // Metod för att radera en bokning.
         public void DeleteBooking()
         {
             Console.Clear();
-            ListAllBookings();
+            ListAllBookings(); // Visar alla bokningar.
             Console.WriteLine("Which booking do you want to remove?");
             string choose = Console.ReadLine();
             bool found = false;
 
-            for (int i = Program.BookingList.Count - 1; i >= 0; i--) // Fick inte till det med en foreach, så denna gör att i börjar på den sista count i listan pga -1 och minskar med ett för varje varv som choose != namnet
+            // Loopar bakåt genom listan för att undvika fel när man tar bort element.
+            for (int i = Program.BookingList.Count - 1; i >= 0; i--)
             {
-                if (choose == Program.BookingList[i].BookedPremises.Name) // Här kollar det om choose == namnet på position i, om de är sant körs koden under
+                // Kollar om det angivna namnet matchar bokningens rum.
+                if (choose == Program.BookingList[i].BookedPremises.Name)
                 {
                     found = true;
                     Console.WriteLine($"Removing {Program.BookingList[i].BookedPremises.Name}");
-                    Program.BookingList.RemoveAt(i);
+                    Program.BookingList.RemoveAt(i); // Tar bort bokningen.
                     Console.ReadLine();
                 }
             }
-            if (!found)
+            if (!found) // Om ingen matchande bokning hittades.
             {
                 Console.WriteLine($"Couldn't find {choose}");
                 Console.ReadLine();
             }
         }
 
+        // Metod för att skapa en ny bokning.
         public void NewBooking()
         {
             Console.Clear();
             Console.WriteLine("Choose a premises to book\n");
-            Program.ListAllPremises();
+            Program.ListAllPremises(); // Visar alla tillgängliga lokaler.
 
             Console.WriteLine("Enter the name of the premises you want to book:");
-            string bookingName = Console.ReadLine().ToLower();
+            string bookingName = Console.ReadLine();
 
+            // Letar efter lokalen med angivet namn.
             var selectedRoom = Program.PremisesList.FirstOrDefault(p => p.Name.Equals(bookingName, StringComparison.OrdinalIgnoreCase));
             if (selectedRoom == null)
             {
@@ -57,49 +60,53 @@ namespace Booking_System
                 return;
             }
 
-
+            // Tar emot startdatum från användaren.
             Console.WriteLine("Enter start date and time (YYYY-MM-DD) (00:00): ");
             if (!DateTime.TryParse(Console.ReadLine(), out DateTime startDate))
             {
                 Console.WriteLine("Invalid start date format. Please use YYYY-MM-DD.");
                 return;
             }
-            if (startDate <  DateTime.Now)
+            if (startDate < DateTime.Now) // Säkerställer att bokningen inte är i det förflutna.
             {
-                Console.WriteLine("Can't make a booking back in time");
+                Console.WriteLine("Can't make a booking back in time.");
                 Console.ReadLine();
                 return;
             }
 
+            // Tar emot slutdatum från användaren.
             Console.WriteLine("Enter end date and time (YYYY-MM-DD) (00:00): ");
             if (!DateTime.TryParse(Console.ReadLine(), out DateTime endDate))
             {
                 Console.WriteLine("Invalid end date format. Please use YYYY-MM-DD.");
                 return;
             }
-            if (endDate < startDate)
+            if (endDate < startDate) // Kontrollerar att slutdatumet inte är före startdatumet.
             {
-                Console.WriteLine("Cant book a room that ends before it starts");
+                Console.WriteLine("Can't book a room that ends before it starts.");
                 Console.ReadLine();
                 return;
             }
 
-            TimeSpan bookingspan = endDate - startDate; // Gör att en bokning inte kan ha ett tidsspan på längre än 5 dagar. 
+            // Begränsar bokningens längd till högst 5 dagar.
+            TimeSpan bookingspan = endDate - startDate;
             if (bookingspan > TimeSpan.FromDays(5))
             {
-                Console.WriteLine("Cant do a booking for longer than 5 days, please adjust your booking or make several ones.");
+                Console.WriteLine("Can't do a booking for longer than 5 days, please adjust your booking or make several ones.");
                 Console.ReadLine();
                 return;
             }
 
+            // Kollar om det valda rummet redan är bokat under den valda tidsperioden,
+            // genom att se om det finns någon bokning där rumsnamnet matchar och startdatumet ligger inom en befintlig bokning.
             bool isBooked = Program.BookingList.Any(b => b.BookedPremises.Name == selectedRoom.Name && startDate >= b.StartDate && startDate < b.EndDate);
-
             if (isBooked)
             {
-                Console.WriteLine("This room is already booked during this period");
+                Console.WriteLine("This room is already booked during this period.");
                 return;
             }
 
+            // Skapar och lägger till bokningen i listan.
             Booking booking = new Booking()
             {
                 StartDate = startDate,
@@ -108,20 +115,21 @@ namespace Booking_System
             };
 
             Program.BookingList.Add(booking);
-            Console.WriteLine("A new booking has been added");
-
+            Console.WriteLine("A new booking has been added.");
         }
 
+        // Metod för att lista alla bokningar.
         public void ListAllBookings()
         {
             Console.Clear();
             foreach (var booking in Program.BookingList)
             {
-                string roomType = booking.BookedPremises is ClassRoom ? "Classroom" : "Group room";   //added variable to display chosen premise
+                string roomType = booking.BookedPremises is ClassRoom ? "Classroom" : "Group room";
                 Console.WriteLine($"Room type: {roomType} \nName: {booking.BookedPremises.Name} \nCapacity: {booking.BookedPremises.Capacity} \nStart date: {booking.StartDate} \nEnd date: {booking.EndDate} \n");
             }
         }
 
+        // Metod för att lista bokningar för ett specifikt år.
         public void ListYear()
         {
             Console.Clear();
@@ -148,6 +156,7 @@ namespace Booking_System
             }
         }
 
+        // Metod för att uppdatera en aktiv bokning.
         public void UpdateBooking()
         {
             Console.Clear();

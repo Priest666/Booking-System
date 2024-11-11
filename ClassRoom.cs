@@ -6,13 +6,10 @@ using System.Threading.Channels;
 using System.Threading.Tasks;
 
 namespace Booking_System
-{
-
-    
+{ 
      internal class ClassRoom : Premises
-    {
-       
-        public bool HasProjector {  get; set; } // Har denna för att avgöra om det är ett grupprum eller klassrum.
+     {    
+        public bool HasProjector {  get; set; } // Har denna för att avgöra om det är ett grupprum eller klassrum. Klassrum har en projektor.
 
         public ClassRoom(string name, int capacity, bool hasProjector) : base(name, capacity)
         {
@@ -25,8 +22,5 @@ namespace Booking_System
             
             return "Available Projector: " + HasProjector + ".";
         }
-       
-
-
-    }
+     }
 }

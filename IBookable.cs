@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 namespace Booking_System
 {
     internal interface IBookable
-    {
+    { 
+        //Interface för Booking klassen.
         void NewBooking();
         void ListAllBookings();
         void UpdateBooking();
