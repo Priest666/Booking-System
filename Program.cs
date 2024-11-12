@@ -223,8 +223,14 @@ namespace Booking_System
         // Metod för att spara lokaler till en JSON-fil.
         public static void SavePremisesToFile()
         {
-            var json = JsonSerializer.Serialize(PremisesList, new JsonSerializerOptions { WriteIndented = true }); // Serialiserar till JSON och WriteIndented gör filen mer läsbar.
-            File.WriteAllText(PremisesFile, json); // Sparar JSON till filen.
+            var options = new JsonSerializerOptions
+            {
+                WriteIndented = true
+            };
+
+            var json = JsonSerializer.Serialize(PremisesList, options); // Serialize with polymorphism
+            Console.WriteLine(json); // Debug the JSON output
+            File.WriteAllText(PremisesFile, json); // Save JSON to file
         }
     }
 }
