@@ -34,6 +34,7 @@ Sedan får du göra ett val på hur många platser du vill att klassrummet/grupp
 
 Menyval 9. “Save and exit”, detta menyval kommer spara de salar som du själv skapat och sedan avsluta programmet. 
 
+json filen går att hitta i bin mappen.
 
 ○ Val och motiveringar för implementation:
 Denna del tyckte vi var mest intressant i koden och väljer därför att lyfta den lite gällande filhanteringen. Vi upptäckte att om man startar programmet för första gången så existerar inte json filen och då kom det direkt upp ett felmeddelande att filen inte existerade. Så för att lösa problemet att användaren direkt får upp ett felmeddelande så skapades denna kodbit för att se till att filen skapas direkt när programmet körs för första gången. 
