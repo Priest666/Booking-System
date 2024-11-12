@@ -36,11 +36,22 @@ namespace Booking_System
                     Console.ReadLine();
                 }
             }
+            if (string.IsNullOrEmpty(choose)) // Ifall användarinput är null fångas det upp.
+            {
+                Console.WriteLine();
+                Console.WriteLine("Invalid input.");
+                Console.WriteLine();
+                return;
+            }
             if (!found) // Om ingen matchande bokning hittades.
             {
+                Console.WriteLine();
                 Console.WriteLine($"Couldn't find {choose}");
-                Console.ReadLine(); 
+                Console.WriteLine();
+                return;
+                
             }
+          
         }
 
         // Metod för att skapa en ny bokning.
@@ -134,8 +145,9 @@ namespace Booking_System
             }
             if (!BookingExist) //if-sats för att se över om det över huvudtaget finns någon bokning att "lista" upp.
             {
-                Console.WriteLine("There is nothing booked at this moment.\nYou have to book a room first in order to list bookings.");
+                Console.WriteLine("There is nothing booked at this moment.\nYou have to book a room first in order to manage bookings.");
                 Console.WriteLine();
+                
             }
 
         }
@@ -182,6 +194,14 @@ namespace Booking_System
             // Sök efter bokningen associerad med det angivna rumsnamnet, detta gör även så att det inte spelar någon roll om man skriver med stor bokstav eller ej.
             var booking = Program.BookingList.FirstOrDefault(b => string.Equals (b.BookedPremises.Name, roomName, StringComparison.OrdinalIgnoreCase));
             
+            // Ser över först och främst att användarinput inte är null, felmeddelande skrivs ut.
+            if (string.IsNullOrEmpty(roomName))
+            {
+                Console.WriteLine();
+                Console.WriteLine("Invalid input.");
+                Console.WriteLine();
+                return;
+            }
 
             // Om en bokning hittas, fortsätt med uppdateringen.
             if (booking != null)
@@ -240,8 +260,11 @@ namespace Booking_System
             // Om ingen bokning hittades för det angivna rumsnamnet, informera användaren.
             else
             {
-                Console.WriteLine($"No booking of {roomName} was found");
+                Console.WriteLine();
+                Console.WriteLine($"No booking of {roomName} was found.");
+                Console.WriteLine();
             }
+            
         }
     }
 }
