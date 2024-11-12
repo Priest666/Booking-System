@@ -169,7 +169,7 @@ namespace Booking_System
                 {
                     found = true;
                     Console.WriteLine($"This is the bookings from {correctYear}");
-                    Console.WriteLine($"Bookingname: {boc.BookedPremises.Name}, Booked from: {boc.StartDate} To: {boc.EndDate}, Timespan: Days:{span.Days} Hours:{span.Hours} Minutes {span.Minutes}");
+                    Console.WriteLine($"Bookingname: {boc.BookedPremises.Name}, Booked from: {boc.StartDate} To: {boc.EndDate}, Timespan: Days:{span.Days} Hours:{span.Hours} Minutes: {span.Minutes}");
                 }
             }
 
