@@ -229,7 +229,6 @@ namespace Booking_System
             };
 
             var json = JsonSerializer.Serialize(PremisesList, options); // Serialize with polymorphism
-            Console.WriteLine(json); // Debug the JSON output
             File.WriteAllText(PremisesFile, json); // Save JSON to file
         }
     }
