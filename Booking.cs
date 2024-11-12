@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
@@ -38,7 +39,7 @@ namespace Booking_System
             if (!found) // Om ingen matchande bokning hittades.
             {
                 Console.WriteLine($"Couldn't find {choose}");
-                Console.ReadLine();
+                Console.ReadLine(); 
             }
         }
 
@@ -122,11 +123,21 @@ namespace Booking_System
         public void ListAllBookings()
         {
             Console.Clear();
+
+            bool BookingExist = false;
+
             foreach (var booking in Program.BookingList)
             {
+                BookingExist = true;
                 string roomType = booking.BookedPremises is ClassRoom ? "Classroom" : "Group room";
                 Console.WriteLine($"Room type: {roomType} \nName: {booking.BookedPremises.Name} \nCapacity: {booking.BookedPremises.Capacity} \nStart date: {booking.StartDate} \nEnd date: {booking.EndDate} \n");
             }
+            if (!BookingExist) //if-sats för att se över om det över huvudtaget finns någon bokning att "lista" upp.
+            {
+                Console.WriteLine("There is nothing booked at this moment.\nYou have to book a room first in order to list bookings.");
+                Console.WriteLine();
+            }
+
         }
 
         // Metod för att lista bokningar för ett specifikt år.
