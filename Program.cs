@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.Design;
 using System.Text.Json;
 using System.IO;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Booking_System
 {
@@ -78,6 +79,23 @@ namespace Booking_System
             {
                 Console.WriteLine($"Room name: {premises.Name}, Max capacity: {premises.Capacity}, {premises.Print()}");
             }
+
+            Console.WriteLine("Do you want to list all the premisis accordning to capacity? Yes/No");
+            string choose = Console.ReadLine().ToLower();
+            Console.Clear();
+            if (choose == "yes")
+            {
+                var sortedlist = PremisesList.OrderByDescending(p => p.Capacity).ToList(); // Sorterar listan med högst antal platser och sedan i fallande ordning. 
+                foreach (var premise in sortedlist)
+                {
+                    Console.WriteLine($"Room name: {premise.Name}, Max capacity: {premise.Capacity}, {premise.Print()}");
+                }
+            }
+            else
+            {
+                return; // Skrivs något annat än yes in så hamnar man i menyn igen.
+            }
+           
         }
 
         // Metod för att skapa en ny lokal.
