@@ -14,17 +14,18 @@ namespace Booking_System
         private static readonly string PremisesFile = "premises.json"; // Filnamn för att spara och ladda lokaler.
 
         // Enkel meny.
-        private static void Menu() 
+        private static void Menu()
         {
             Console.WriteLine("1. New booking");
             Console.WriteLine("2. List all bookings");
             Console.WriteLine("3. Update booking");
             Console.WriteLine("4. Delete booking");
             Console.WriteLine("5. List specific year booking.");
-            Console.WriteLine("6. List all premises");
-            Console.WriteLine("7. Create new premises");
-            Console.WriteLine("8. Save and Exit");
-        } 
+            Console.WriteLine("6. Sort premises");
+            Console.WriteLine("7. List all premises");
+            Console.WriteLine("8. Create new premises");
+            Console.WriteLine("9. Save and Exit");
+        }
 
         public static void Main(string[] args)
         {
@@ -34,7 +35,7 @@ namespace Booking_System
 
             while (runProgram)
             {
-                Menu(); 
+                Menu();
                 string input = Console.ReadLine();
 
                 switch (input)
@@ -55,14 +56,17 @@ namespace Booking_System
                         booking.ListYear();
                         break;
                     case "6":
-                        ListAllPremises();
+                        SortPremises();
                         break;
                     case "7":
-                        CreateNewPremises();
+                        ListAllPremises();
                         break;
                     case "8":
+                        CreateNewPremises();
+                        break;
+                    case "9":
                         SavePremisesToFile(); //Sparar ner salarna.
-                        runProgram = false; 
+                        runProgram = false;
                         break;
                     default:
                         Console.WriteLine("Invalid input.");
@@ -80,10 +84,16 @@ namespace Booking_System
                 Console.WriteLine($"Room name: {premises.Name}, Max capacity: {premises.Capacity}, {premises.Print()}");
             }
 
-            Console.WriteLine("Do you want to list all the premisis accordning to capacity? Yes/No");
-            string choose = Console.ReadLine().ToLower();
+        }
+
+        // Metod för att sortera
+        public static void SortPremises()
+        {
             Console.Clear();
-            if (choose == "yes")
+            Console.WriteLine("How do you want to sort the premises? \n1. Decreasing capacity \n2. Increasing capacity");
+            string choose = Console.ReadLine();
+            Console.Clear();
+            if (choose == "1")
             {
                 var sortedlist = PremisesList.OrderByDescending(p => p.Capacity).ToList(); // Sorterar listan med högst antal platser och sedan i fallande ordning. 
                 foreach (var premise in sortedlist)
@@ -91,11 +101,20 @@ namespace Booking_System
                     Console.WriteLine($"Room name: {premise.Name}, Max capacity: {premise.Capacity}, {premise.Print()}");
                 }
             }
+            else if (choose == "2")
+            {
+                var sortedlist = PremisesList.OrderBy(p => p.Capacity).ToList(); // Sorterar listan med lägst antal platser och sen i stigande ordning
+                foreach (var premise in sortedlist)
+                {
+                    Console.WriteLine($"Room name: {premise.Name}, Max capacity: {premise.Capacity}, {premise.Print()}");
+                }
+            }
             else
             {
-                return; // Skrivs något annat än yes in så hamnar man i menyn igen.
+                Console.WriteLine("Invalid input");
+                Console.ReadLine();
+                return;
             }
-           
         }
 
         // Metod för att skapa en ny lokal.
